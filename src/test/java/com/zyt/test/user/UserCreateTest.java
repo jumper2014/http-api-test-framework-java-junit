@@ -1,11 +1,13 @@
 package com.zyt.test.user;
 
 import com.zyt.http.Request;
+import com.zyt.db.User;
 import net.sf.json.JSONObject;
 
 import static java.lang.System.out;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import junit.framework.TestCase;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -16,11 +18,11 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-public class UserCreateTest {
+public class UserCreateTest extends TestCase {
 
     @Test
-    public void createNewUser() {
-        String JSON_SIMPLE = "{'name':'tom','age':16}";
+    public void testCreateNewUser() {
+        String JSON_SIMPLE = "{'name':'root','age':40}";
         JSONObject body = JSONObject.fromObject(JSON_SIMPLE);
         Request request = new Request();
         String url = "http://127.0.0.1:8080/user";
@@ -40,6 +42,14 @@ public class UserCreateTest {
         else{
             fail("result :"+state+"("+url+")");
         }
+    }
+
+    public void setUp() throws Exception {
+        User user = new User();
+        user.deleteUserByName("root");
+    }
+
+    public void tearDown() throws Exception {
     }
 
 }
